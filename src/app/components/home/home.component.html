@@ -1,7 +1,77 @@
-<section class="content p-10">
+<section id="section-1" class="content p-10">
   <div class="text-center">
-    <h1 class="text-3xl font-bold underline">
-      Hello world!
+    <h1 class="text-3xl font-bold">
+      Bem-vindo ao Churrascômetro!
     </h1>
+  </div>
+
+  <!-- Blocos de condição -->
+
+  <!-- <div *ngIf="true">
+    Esse elemento só é exibido se o IF for verdadeiro.
+  </div>
+
+  <div *ngIf="false; else elseBlock">
+    Esse elemento só é exibido se o segundo o IF for verdadeiro.
+  </div>
+
+  <ng-template #elseBlock>
+    Esse elemento só é exibido se o segundo IF for falso.
+  </ng-template>
+
+  @if (true) {
+  <p>Esse elemento será exibido se o IF for verdadeiro.</p>
+  }
+
+  @if (false) {
+  <p>Esse elemento só é exibido se o segundo IF for falso.</p>
+  } @else {
+  <p>Esse elemento será exibido se o segundo IF for falso.</p>
+  } -->
+
+  <!-- Blocos de iteração -->
+
+  <!-- <div *ngFor="let item of numeros, let i = index">
+    Elemento {{ i }} : {{ item }}
+  </div>
+
+  <div *ngIf="numeros.length === 0">
+    <strong>Nenhum elemento</strong>
+  </div>
+
+  @for (item of numeros; track item; let i = $index) {
+  <div>Elemento {{ i }} : {{ item }}</div>
+  } @empty {
+  <strong>Nenhum elemento</strong>
+  } -->
+
+  <!-- Bloco de comportamento -->
+
+  <!-- <button [ngClass]="{'botao-ativo': ativo}" (click)="ativo = !ativo">
+    Botão com ngClass
+  </button>
+
+  <div [ngStyle]="{'font-size': '48px', 'color': 'purple'}">
+    Texto com ngStyle
+  </div> -->
+
+</section>
+
+<section id="section-2" class="content bg-indigo-100 p-10">
+  <div class="h-80 flex justify-end">
+    <button mat-flat-button color="primary" (click)="scrollToSection('section-3')">Scroll to
+      the next section</button>
+  </div>
+</section>
+
+<section id="section-3" class="content bg-indigo-300 p-10" [ngClass]="{'hidden': sectionThreeHidden}">
+  <div class="h-80 flex justify-end">
+    <button mat-flat-button color="primary" (click)="scrollToSection('section-4')">Scroll to the next section</button>
+  </div>
+</section>
+
+<section id="section-4" class="content bg-indigo-500 p-10" [ngClass]="{'hidden': sectionFourHidden}">
+  <div class="h-80 flex justify-end">
+    <button mat-flat-button color="primary" (click)="scrollToSection('section-1')">Scroll to the top</button>
   </div>
 </section>

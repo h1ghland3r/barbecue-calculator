@@ -8,6 +8,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
+
+
+
+
 export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   title: string = 'Churrascômetro';
