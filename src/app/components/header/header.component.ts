@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
@@ -8,8 +8,23 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
-  title: string = 'Barbecue Calculator';
+  title: string = 'Churrascômetro';
 
+  constructor() {
+    console.log('HeaderComponent constructor()');
+  }
+
+  public ngOnInit(): void {
+    console.log('HeaderComponent ngOnInit()');
+  }
+
+  public ngOnChanges(): void {
+    console.log('HeaderComponent ngOnChanges()');
+  }
+
+  public ngOnDestroy(): void {
+    console.log('HeaderComponent ngOnDestroy()');
+  }
 }
