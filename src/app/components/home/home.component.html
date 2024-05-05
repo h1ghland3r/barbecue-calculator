@@ -1,8 +1,50 @@
 <section id="section-1" class="content p-10">
   <div class="text-center">
     <h1 class="text-3xl font-bold">
-      Bem-vindo ao Churrascômetro!
+      {{ welcomeMessage }}
+
+      <!-- Data Binding -->
+
+      <!-- Olá, {{ getName() }} -->
+      <br>
+      {{ hasUser ? 'Olá, ' + getName() : '' }}
+      <br>
+
+      <p>Clique aqui para visitar para o site da Ada:</p>
+      <a [href]="adaUrl" target="_blank">https://ada.tech</a>
+
+      <br>
+
+      <button mat-button (click)="onClick()">Clique aqui</button>
+
+      <div *ngIf="displayButtonOutput"> {{ onClick() }} </div>
+
+      <input [(ngModel)]="username">
     </h1>
+
+    <h4>
+      <!-- DatePipe -->
+      <p>A data de hoje é: {{ hoje | date }}</p>
+
+      <p>A data de hoje é: {{ hoje | date: 'short' }}</p>
+
+      <p>A data de hoje é: {{ hoje | date: 'dd/MM/yyyy' }}</p>
+
+      <p>A data de hoje é: {{ hoje | date:'h:mm a z'}}</p>
+
+      <p>A data é: {{ hoje | date: 'dd/MM/yyyy HH:mm:ss' : 'America/Brasilia' }}</p>
+    </h4>
+
+    <h4 class="mt-4">
+      <!-- CurrencyPipe -->
+      <p>{{ 145 | currency }}</p>
+
+      <p>{{ 599.99 | currency:'BRL' }}</p>
+
+      <p>{{ 12150.00 | currency:'BRL' }}</p>
+
+    </h4>
+
   </div>
 
   <!-- Blocos de condição -->
