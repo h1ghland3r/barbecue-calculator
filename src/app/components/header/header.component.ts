@@ -14,7 +14,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
 
-  title: string = 'Churrascômetro';
+  title: string = 'Barbecue Calculator';
 
   constructor() {
     console.log('HeaderComponent constructor()');

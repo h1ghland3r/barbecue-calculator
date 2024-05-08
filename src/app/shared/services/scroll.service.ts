@@ -11,7 +11,9 @@ export class ScrollService {
     const section = document.getElementById(id);
 
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
     }
   }
 }

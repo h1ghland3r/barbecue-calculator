@@ -2,104 +2,26 @@
   <div class="text-center">
     <h1 class="text-3xl font-bold">
       {{ welcomeMessage }}
-
-      <!-- Data Binding -->
-
-      <!-- Olá, {{ getName() }} -->
-      <br>
-      {{ hasUser ? 'Olá, ' + getName() : '' }}
-      <br>
-
-      <p>Clique aqui para visitar para o site da Ada:</p>
-      <a [href]="adaUrl" target="_blank">https://ada.tech</a>
-
-      <br>
-
-      <button mat-button (click)="onClick()">Clique aqui</button>
-
-      <div *ngIf="displayButtonOutput"> {{ onClick() }} </div>
-
-      <input [(ngModel)]="username">
     </h1>
-
-    <h4>
-      <!-- DatePipe -->
-      <p>A data de hoje é: {{ hoje | date }}</p>
-
-      <p>A data de hoje é: {{ hoje | date: 'short' }}</p>
-
-      <p>A data de hoje é: {{ hoje | date: 'dd/MM/yyyy' }}</p>
-
-      <p>A data de hoje é: {{ hoje | date:'h:mm a z'}}</p>
-
-      <p>A data é: {{ hoje | date: 'dd/MM/yyyy HH:mm:ss' : 'America/Brasilia' }}</p>
-    </h4>
-
-    <h4 class="mt-4">
-      <!-- CurrencyPipe -->
-      <p>{{ 145 | currency }}</p>
-
-      <p>{{ 599.99 | currency:'BRL' }}</p>
-
-      <p>{{ 12150.00 | currency:'BRL' }}</p>
-
-    </h4>
-
   </div>
 
-  <!-- Blocos de condição -->
-
-  <!-- <div *ngIf="true">
-    Esse elemento só é exibido se o IF for verdadeiro.
+  <div class="text-center">
+    <button mat-raised-button color="primary" class="button-start" (click)="startPriceCalculatioN()">Let's
+      start?</button>
   </div>
-
-  <div *ngIf="false; else elseBlock">
-    Esse elemento só é exibido se o segundo o IF for verdadeiro.
-  </div>
-
-  <ng-template #elseBlock>
-    Esse elemento só é exibido se o segundo IF for falso.
-  </ng-template>
-
-  @if (true) {
-  <p>Esse elemento será exibido se o IF for verdadeiro.</p>
-  }
-
-  @if (false) {
-  <p>Esse elemento só é exibido se o segundo IF for falso.</p>
-  } @else {
-  <p>Esse elemento será exibido se o segundo IF for falso.</p>
-  } -->
-
-  <!-- Blocos de iteração -->
-
-  <!-- <div *ngFor="let item of numeros, let i = index">
-    Elemento {{ i }} : {{ item }}
-  </div>
-
-  <div *ngIf="numeros.length === 0">
-    <strong>Nenhum elemento</strong>
-  </div>
-
-  @for (item of numeros; track item; let i = $index) {
-  <div>Elemento {{ i }} : {{ item }}</div>
-  } @empty {
-  <strong>Nenhum elemento</strong>
-  } -->
-
-  <!-- Bloco de comportamento -->
-
-  <!-- <button [ngClass]="{'botao-ativo': ativo}" (click)="ativo = !ativo">
-    Botão com ngClass
-  </button>
-
-  <div [ngStyle]="{'font-size': '48px', 'color': 'purple'}">
-    Texto com ngStyle
-  </div> -->
 
 </section>
 
+<section class="content bg-indigo-100 p-10">
+  @if (isPriceCalculationStarted) {
+  <app-price-calculation></app-price-calculation>
+  }
+</section>
+
 <section id="section-2" class="content bg-indigo-100 p-10">
+
+
+
   <div class="h-80 flex justify-end">
     <button mat-flat-button color="primary" (click)="scrollToSection('section-3')">Scroll to
       the next section</button>
@@ -112,8 +34,8 @@
   </div>
 </section>
 
-<section id="section-4" class="content bg-indigo-500 p-10" [ngClass]="{'hidden': sectionFourHidden}">
-  <div class="h-80 flex justify-end">
-    <button mat-flat-button color="primary" (click)="scrollToSection('section-1')">Scroll to the top</button>
+<section id="section-end" class="content bg-indigo-500 p-10">
+  <div class="flex justify-end">
+    <button mat-flat-button color="primary" (click)="scrollToSection('header')">Scroll to the top</button>
   </div>
 </section>

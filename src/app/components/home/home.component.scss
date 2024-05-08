@@ -4,3 +4,11 @@
   padding: 2px 5px;
   border-radius: 4px;
 }
+
+.button-start {
+  @apply w-60 mt-8 py-4 px-8 text-lg font-semibold rounded-md bg-indigo-600 text-white shadow-lg transition-all duration-300 ease-in-out;
+
+  &:hover {
+    @apply bg-indigo-600 transform scale-105;
+  }
+}

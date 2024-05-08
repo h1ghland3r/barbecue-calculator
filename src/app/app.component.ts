@@ -18,4 +18,5 @@ registerLocaleData(pt);
 })
 export class AppComponent {
   title = 'barbecue-calculator';
+  novoTitulo = '123'
 }

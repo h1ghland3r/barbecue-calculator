@@ -3,11 +3,12 @@ import { Component, Inject, LOCALE_ID, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { FormsModule } from '@angular/forms';
+import { PriceCalculationComponent } from '../../price-calculation/price-calculation.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, FormsModule],
+  imports: [CommonModule, MatButtonModule, FormsModule, PriceCalculationComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -36,23 +37,29 @@ export class HomeComponent {
 
   hoje = new Date();
 
+  isPriceCalculationStarted = false;
+
   getName() {
     return this.name;
   }
 
   scrollToSection(id: string): void {
-    this.scrollService.scrollToSection(id);
-
     if (id === 'section-3') {
       this.sectionThreeHidden = false;
     } else if (id === 'section-4') {
       this.sectionFourHidden = false;
     }
+
+    this.scrollService.scrollToSection(id);
   }
 
   onClick(): string {
     this.displayButtonOutput = true;
     return 'Você clicou no botão!';
+  }
+
+  startPriceCalculatioN(): void {
+    this.isPriceCalculationStarted = true;
   }
 
 }
