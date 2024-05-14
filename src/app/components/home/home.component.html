@@ -1,4 +1,4 @@
-<section id="section-1" class="content p-10">
+<section id="section-start" class="content p-10">
   <div class="text-center">
     <h1 class="text-3xl font-bold">
       {{ welcomeMessage }}
@@ -6,36 +6,23 @@
   </div>
 
   <div class="text-center">
-    <button mat-raised-button color="primary" class="button-start" (click)="startPriceCalculatioN()">Let's
+    <button mat-raised-button color="primary" class="button-start" (click)="startPriceCalculation()">Let's
       start?</button>
   </div>
 
 </section>
 
-<section class="content bg-indigo-100 p-10">
+<section class="content bg-indigo-100 min-h-[calc(100vh-400px)] p-10">
   @if (isPriceCalculationStarted) {
   <app-price-calculation></app-price-calculation>
   }
 </section>
 
-<section id="section-2" class="content bg-indigo-100 p-10">
-
-
-
-  <div class="h-80 flex justify-end">
-    <button mat-flat-button color="primary" (click)="scrollToSection('section-3')">Scroll to
-      the next section</button>
-  </div>
-</section>
-
-<section id="section-3" class="content bg-indigo-300 p-10" [ngClass]="{'hidden': sectionThreeHidden}">
-  <div class="h-80 flex justify-end">
-    <button mat-flat-button color="primary" (click)="scrollToSection('section-4')">Scroll to the next section</button>
-  </div>
+<section class="section-result bg-indigo-300 min-h-[20px]">
 </section>
 
 <section id="section-end" class="content bg-indigo-500 p-10">
   <div class="flex justify-end">
-    <button mat-flat-button color="primary" (click)="scrollToSection('header')">Scroll to the top</button>
+    <button mat-flat-button color="primary" (click)="scrollToSection('section-start')">Scroll to the top</button>
   </div>
 </section>

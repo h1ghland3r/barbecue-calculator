@@ -1,0 +1,47 @@
+/* tailwind components;
+
+layer components {
+ .header {
+   height: 8rem; 6px * 8 = 128px
+   .flex-container {
+     background: theme("colors.primary");
+     ont-size: theme("fontSize.grande");
+     display: flex;
+     justify-content: space-between;
+     height: 100%;
+     align-items: center;
+
+     @media (min-width: 768px) {
+       flex-direction: row-reverse;
+     }
+     menu {
+       &.mobile {
+         display: block;
+         @media (min-width: 768px) {
+           display: none;
+         }
+       }
+       &.desktop {
+         display: none;
+         @media (min-width: 768px) {
+           display: flex;
+         }
+       }
+     }
+     .logo {
+       display: flex;
+       align-items: center;
+       gap: 1rem; 6px
+
+       @media (min-width: 768px) {
+         flex-direction: row-reverse;
+       }
+       .image {
+         height: 64px;
+         width: 64px;
+         border-radius: 1rem; 6px
+       }
+     }
+   }
+ }
+ */

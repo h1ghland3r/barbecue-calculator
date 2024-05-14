@@ -1,7 +1,7 @@
 import { Component, LOCALE_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import pt from '@angular/common/locales/pt';
 
 registerLocaleData(pt);
@@ -9,7 +9,7 @@ registerLocaleData(pt);
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, CommonModule],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' },
   ],
@@ -17,6 +17,5 @@ registerLocaleData(pt);
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'barbecue-calculator';
-  novoTitulo = '123'
+  title: string = 'Barbecue Calculator';
 }

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, LOCALE_ID, inject } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { FormsModule } from '@angular/forms';
 import { PriceCalculationComponent } from '../../price-calculation/price-calculation.component';
+import { BarbecueService } from '../../shared/services/barbecue.service';
 
 @Component({
   selector: 'app-home',
@@ -12,54 +13,75 @@ import { PriceCalculationComponent } from '../../price-calculation/price-calcula
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
-
-  numeros = [1, 2, 3, 4, 5];
+export class HomeComponent implements OnInit {
 
   ativo: boolean = false;
   sectionThreeHidden: boolean = true;
   sectionFourHidden: boolean = true;
 
-  scrollService = inject(ScrollService);
-
   welcomeMessage = 'Welcome to the Barbecue Calculator!';
-  name = 'Railan';
-
-  hasUser = true;
-
-  adaUrl = 'https://ada.tech';
-
-  displayButtonOutput = false;
-
-  // constructor(private scrollService: ScrollService) { }
-
-  username = '';
-
-  hoje = new Date();
-
   isPriceCalculationStarted = false;
 
-  getName() {
-    return this.name;
+  preco_picanha = 0;
+  preco_costela = 0;
+  preco_linguica = 0;
+  preco_frango = 0;
+  preco_cerveja = 0;
+  preco_refrigerante = 0;
+  preco_agua = 0;
+  preco_suco = 0;
+
+  scrollService = inject(ScrollService);
+  barbecueService = inject(BarbecueService);
+
+  ngOnInit(): void {
+    this.barbecueService.getPrecoCarneByName('picanha')
+      .subscribe(
+        {
+          next: (result) => {
+            console.log(result);
+          },
+
+          error: (err: any) => {
+            console.log(err);
+          }
+        }
+      )
+
+    this.barbecueService.getPrecoPicanha()
+      .subscribe(
+        {
+          next: (preco) => {
+            this.preco_picanha = preco;
+            console.log('O kg da Picanha custa: ' + this.preco_picanha);
+          },
+
+          error: (err: any) => {
+            console.log(err);
+          }
+        }
+      )
+
+    this.barbecueService.getPrecoCerveja()
+      .subscribe(
+        {
+          next: (preco) => {
+            this.preco_cerveja = preco;
+            console.log('Cada cerveja custa: ' + this.preco_cerveja);
+          },
+
+          error: (err: any) => {
+            console.log(err);
+          }
+        }
+      )
   }
 
   scrollToSection(id: string): void {
-    if (id === 'section-3') {
-      this.sectionThreeHidden = false;
-    } else if (id === 'section-4') {
-      this.sectionFourHidden = false;
-    }
-
     this.scrollService.scrollToSection(id);
   }
 
-  onClick(): string {
-    this.displayButtonOutput = true;
-    return 'Você clicou no botão!';
-  }
-
-  startPriceCalculatioN(): void {
+  startPriceCalculation(): void {
     this.isPriceCalculationStarted = true;
   }
-
 }
