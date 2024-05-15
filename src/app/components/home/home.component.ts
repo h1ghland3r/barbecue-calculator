@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, LOCALE_ID, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ScrollService } from '../../shared/services/scroll.service';
 import { FormsModule } from '@angular/forms';
-import { PriceCalculationComponent } from '../../price-calculation/price-calculation.component';
 import { BarbecueService } from '../../shared/services/barbecue.service';
+import { PriceCalculationComponent } from '../price-calculation/price-calculation.component';
 
 @Component({
   selector: 'app-home',
