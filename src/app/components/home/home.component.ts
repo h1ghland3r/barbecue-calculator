@@ -22,59 +22,10 @@ export class HomeComponent implements OnInit {
   welcomeMessage = 'Welcome to the Barbecue Calculator!';
   isPriceCalculationStarted = false;
 
-  preco_picanha = 0;
-  preco_costela = 0;
-  preco_linguica = 0;
-  preco_frango = 0;
-  preco_cerveja = 0;
-  preco_refrigerante = 0;
-  preco_agua = 0;
-  preco_suco = 0;
-
   scrollService = inject(ScrollService);
-  barbecueService = inject(BarbecueService);
 
   ngOnInit(): void {
-    this.barbecueService.getPrecoCarneByName('picanha')
-      .subscribe(
-        {
-          next: (result) => {
-            console.log(result);
-          },
 
-          error: (err: any) => {
-            console.log(err);
-          }
-        }
-      )
-
-    this.barbecueService.getPrecoPicanha()
-      .subscribe(
-        {
-          next: (preco) => {
-            this.preco_picanha = preco;
-            console.log('O kg da Picanha custa: ' + this.preco_picanha);
-          },
-
-          error: (err: any) => {
-            console.log(err);
-          }
-        }
-      )
-
-    this.barbecueService.getPrecoCerveja()
-      .subscribe(
-        {
-          next: (preco) => {
-            this.preco_cerveja = preco;
-            console.log('Cada cerveja custa: ' + this.preco_cerveja);
-          },
-
-          error: (err: any) => {
-            console.log(err);
-          }
-        }
-      )
   }
 
   scrollToSection(id: string): void {

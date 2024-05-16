@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,22 +13,6 @@ import { MatMenuModule } from '@angular/material/menu';
 })
 
 
-export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
+export class HeaderComponent {
   @Input() headerTitle!: string;
-
-  constructor() {
-    console.log('HeaderComponent constructor()');
-  }
-
-  public ngOnInit(): void {
-    console.log('HeaderComponent ngOnInit()');
-  }
-
-  public ngOnChanges(): void {
-    console.log('HeaderComponent ngOnChanges()');
-  }
-
-  public ngOnDestroy(): void {
-    console.log('HeaderComponent ngOnDestroy()');
-  }
 }
