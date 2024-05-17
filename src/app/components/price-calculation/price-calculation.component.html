@@ -1,61 +1,129 @@
-<!-- template  driven -->
-<form (ngSubmit)="onSubmit()" class="example-form">
-  <div class="flex flex-col mx-auto m-2 mb-8 w-80">
-    <mat-form-field class="block">
-      <mat-label>Nome</mat-label>
-      <input matInput name="nome" [(ngModel)]="nome" placeholder="Digite o nome" required>
-      <mat-error *ngIf="!nome">Nome é obrigatório</mat-error>
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" [disabled]="!nome">Enviar</button>
+<div class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Valores de referência das Carnes e Bebidas</h1>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <div class="bg-white shadow-md rounded p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">Picanha</h2>
+        <p>Preço por kg: {{ preco_picanha | currency:'BRL' }}</p>
+        <p>Consumo médio por adulto (g): {{ consumo_adulto_picanha }}</p>
+        <p>Consumo médio por criança (g): {{ consumo_crianca_picanha }}</p>
+      </div>
+
+      <div class="bg-white shadow-md rounded p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">Costela</h2>
+        <p>Preço por kg: {{ preco_costela | currency:'BRL' }}</p>
+        <p>Consumo médio por adulto (g): {{ consumo_adulto_costela }}</p>
+        <p>Consumo médio por criança (g): {{ consumo_crianca_costela }}</p>
+      </div>
+
+      <div class="bg-white shadow-md rounded p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">Linguiça</h2>
+        <p>Preço por kg: {{ preco_linguica | currency:'BRL' }}</p>
+        <p>Consumo médio por adulto (g): {{ consumo_adulto_linguica }}</p>
+        <p>Consumo médio por criança (g): {{ consumo_crianca_linguica }}</p>
+      </div>
+
+      <div class="bg-white shadow-md rounded p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">Frango</h2>
+        <p>Preço por kg: {{ preco_frango | currency:'BRL' }}</p>
+        <p>Consumo médio por adulto (g): {{ consumo_adulto_frango }}</p>
+        <p>Consumo médio por criança (g): {{ consumo_crianca_frango }}</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="bg-white shadow-md rounded p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">Cerveja</h2>
+        <p>Preço por unidade: {{ preco_cerveja | currency:'BRL' }}</p>
+        <p>Consumo médio por adulto (ml): {{ consumo_adulto_cerveja }}</p>
+        <p>Consumo médio por criança (ml): 0</p>
+      </div>
+
+      <div class="bg-white shadow-md rounded p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">Refrigerante</h2>
+        <p>Preço por unidade: {{ preco_refrigerante | currency:'BRL' }}</p>
+        <p>Consumo médio por adulto (ml): {{ consumo_adulto_refrigerante }}</p>
+        <p>Consumo médio por criança (ml): {{ consumo_crianca_refrigerante }}</p>
+      </div>
+
+      <div class="bg-white shadow-md rounded p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">Água</h2>
+        <p>Preço por unidade: {{ preco_agua | currency:'BRL' }}</p>
+        <p>Consumo médio por adulto (ml): {{ consumo_adulto_agua }}</p>
+        <p>Consumo médio por criança (ml): {{ consumo_crianca_agua }}</p>
+      </div>
+
+      <div class="bg-white shadow-md rounded p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">Suco</h2>
+        <p>Preço por unidade: {{ preco_suco | currency:'BRL' }}</p>
+        <p>Consumo médio por adulto (ml): {{ consumo_adulto_suco }}</p>
+        <p>Consumo médio por criança (ml): {{ consumo_crianca_suco }}</p>
+      </div>
+    </div>
   </div>
-</form>
+</div>
 
-<!-- reactive form -->
-
-<mat-stepper orientation="vertical" [linear]="true" #stepper class="w-[640px] mx-auto">
-  <mat-step [stepControl]="formPeople">
-    <form [formGroup]="formPeople" class="flex flex-col">
-      <ng-template matStepLabel>How many people?</ng-template>
-      <mat-form-field class="mt-2">
-        <input matInput type="number" formControlName="adults" placeholder="How many adults?">
+<section id="form-container" class="container mx-auto">
+  <!-- template  driven -->
+  <form (ngSubmit)="onSubmit()">
+    <div class="flex flex-col mx-auto m-2 mb-8 w-80">
+      <mat-form-field class="block">
+        <mat-label>Nome</mat-label>
+        <input matInput name="nome" [(ngModel)]="nome" placeholder="Digite o nome" required>
+        <mat-error *ngIf="!nome">Nome é obrigatório</mat-error>
       </mat-form-field>
-      <mat-form-field class="mt-2">
-        <input matInput type="number" formControlName="children" placeholder="How many children?">
-      </mat-form-field>
-      <mat-error *ngIf="formPeople.invalid || formPeople.get('adults')?.hasError('min')">
-        At least one adult is required!</mat-error>
-      <mat-error *ngIf="formPeople.get('adults')?.value < 0 || formPeople.get('children')?.value < 0">
-        Can't add negative values!
-      </mat-error>
+      <button mat-raised-button class="mt-2" color="primary" type="submit" [disabled]="!nome">Enviar</button>
+    </div>
+  </form>
 
-      <div class="flex justify-end mt-2">
-        <button mat-flat-button color="accent" matStepperNext
-          [disabled]="formPeople.invalid || (formPeople.get('adults')?.value <= 0 || formPeople.get('children')?.value < 0)">Next</button>
-      </div>
-    </form>
-  </mat-step>
+  <!-- reactive form -->
 
-  <mat-step [stepControl]="formFoods">
-    <form [formGroup]="formFoods" class="flex flex-col">
-      <ng-template matStepLabel>What foods we want?</ng-template>
-      <ng-container *ngFor="let food of foodsList; let i = index">
-        <mat-checkbox [formControlName]="food.value">{{food.label}}</mat-checkbox>
-      </ng-container>
-      <div class="flex justify-end mt-2">
-        <button mat-flat-button color="accent" matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
+  <mat-stepper orientation="vertical" [linear]="true" #stepper class="w-[800px] mx-auto">
+    <mat-step [stepControl]="formPeople">
+      <form [formGroup]="formPeople" class="flex flex-col">
+        <ng-template matStepLabel>How many people?</ng-template>
+        <mat-form-field class="mt-2">
+          <input matInput type="number" formControlName="adults" placeholder="How many adults?">
+        </mat-form-field>
+        <mat-form-field class="mt-2">
+          <input matInput type="number" formControlName="children" placeholder="How many children?">
+        </mat-form-field>
+        <mat-error *ngIf="formPeople.invalid || formPeople.get('adults')?.hasError('min')" class="mt-2">
+          At least one adult is required!</mat-error>
+        <mat-error *ngIf="formPeople.get('adults')?.value < 0 || formPeople.get('children')?.value < 0" class="mt-2">
+          Can't add negative values!
+        </mat-error>
 
-  <mat-step [stepControl]="formDrinks">
-    <form [formGroup]="formDrinks" class="flex flex-col">
-      <ng-template matStepLabel>What drinks we want?</ng-template>
-      <ng-container *ngFor="let drink of drinksList; let i = index">
-        <mat-checkbox [formControlName]="drink.value">{{drink.label}}</mat-checkbox>
-      </ng-container>
-      <div class="flex justify-end mt-2">
-        <button mat-flat-button color="accent" type="button" (click)="submit()">Finish</button>
-      </div>
-    </form>
-  </mat-step>
-</mat-stepper>
+        <div class="flex justify-end mt-2">
+          <button mat-flat-button color="accent" matStepperNext
+            [disabled]="formPeople.invalid || (formPeople.get('adults')?.value <= 0 || formPeople.get('children')?.value < 0)">Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="formFoods">
+      <form [formGroup]="formFoods" class="flex flex-col">
+        <ng-template matStepLabel>What foods we want?</ng-template>
+        <ng-container *ngFor="let food of foodsList; let i = index">
+          <mat-checkbox [formControlName]="food.value">{{food.label}}</mat-checkbox>
+        </ng-container>
+        <div class="flex justify-end mt-2">
+          <button mat-flat-button color="accent" matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="formDrinks">
+      <form [formGroup]="formDrinks" class="flex flex-col">
+        <ng-template matStepLabel>What drinks we want?</ng-template>
+        <ng-container *ngFor="let drink of drinksList; let i = index">
+          <mat-checkbox [formControlName]="drink.value">{{drink.label}}</mat-checkbox>
+        </ng-container>
+        <div class="flex justify-end mt-2">
+          <button mat-flat-button color="accent" type="button" (click)="submit()">Finish</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</section>

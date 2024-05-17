@@ -1,6 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, catchError, throwError } from 'rxjs';
+import { Carne } from './../models/carne.interface';
+import { Bebida } from './../models/bebida.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,14 @@ export class BarbecueService {
   private API_URL = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
+
+  getCarnes(): Observable<Carne[]> {
+    return this.http.get<Carne[]>(`${this.API_URL}/carnes`).pipe(catchError(this.handleError));
+  }
+
+  getBebidas(): Observable<Bebida[]> {
+    return this.http.get<Bebida[]>(`${this.API_URL}/bebidas`).pipe(catchError(this.handleError));
+  }
 
   getPrecoCarneByName(nome: string): Observable<number> {
     return this.http.get<any[]>(`${this.API_URL}/carnes`).pipe(

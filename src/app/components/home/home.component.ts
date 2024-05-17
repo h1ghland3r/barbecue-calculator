@@ -13,26 +13,17 @@ import { PriceCalculationComponent } from '../price-calculation/price-calculatio
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   ativo: boolean = false;
   sectionThreeHidden: boolean = true;
   sectionFourHidden: boolean = true;
 
   welcomeMessage = 'Welcome to the Barbecue Calculator!';
-  isPriceCalculationStarted = false;
 
   scrollService = inject(ScrollService);
 
-  ngOnInit(): void {
-
-  }
-
   scrollToSection(id: string): void {
     this.scrollService.scrollToSection(id);
-  }
-
-  startPriceCalculation(): void {
-    this.isPriceCalculationStarted = true;
   }
 }

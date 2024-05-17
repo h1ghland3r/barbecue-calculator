@@ -6,16 +6,14 @@
   </div>
 
   <div class="text-center">
-    <button mat-raised-button color="primary" class="button-start" (click)="startPriceCalculation()">Let's
+    <button mat-raised-button color="primary" class="button-start" (click)="scrollToSection('form-container')">Let's
       start?</button>
   </div>
 
 </section>
 
 <section class="content bg-indigo-100 min-h-[calc(100vh-400px)] p-10">
-  @if (isPriceCalculationStarted) {
   <app-price-calculation></app-price-calculation>
-  }
 </section>
 
 <section class="section-result bg-indigo-300 min-h-[20px]">

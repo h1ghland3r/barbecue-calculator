@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BarbecueService } from '../../shared/services/barbecue.service';
+import { map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-price-calculation',
@@ -25,10 +26,28 @@ export class PriceCalculationComponent implements OnInit {
   preco_costela = 0;
   preco_linguica = 0;
   preco_frango = 0;
+
+  consumo_adulto_picanha = 0;
+  consumo_crianca_picanha = 0;
+  consumo_adulto_costela = 0;
+  consumo_crianca_costela = 0;
+  consumo_adulto_linguica = 0;
+  consumo_crianca_linguica = 0;
+  consumo_adulto_frango = 0;
+  consumo_crianca_frango = 0;
+
   preco_cerveja = 0;
   preco_refrigerante = 0;
   preco_agua = 0;
   preco_suco = 0;
+
+  consumo_adulto_cerveja = 0;
+  consumo_adulto_refrigerante = 0;
+  consumo_crianca_refrigerante = 0;
+  consumo_adulto_agua = 0;
+  consumo_crianca_agua = 0;
+  consumo_adulto_suco = 0;
+  consumo_crianca_suco = 0;
 
   foodsList = [
     { value: 'picanha', label: 'Picanha' },
@@ -95,46 +114,104 @@ export class PriceCalculationComponent implements OnInit {
   }
 
   private initializeValues(): void {
-    this.barbecueService.getPrecoCarneByName('picanha')
-      .subscribe(
-        {
-          next: (result) => {
-            console.log(result);
-          },
-
-          error: (err: any) => {
-            console.log(err);
+    this.barbecueService.getCarnes().pipe(
+      map(carnes => {
+        carnes.forEach(carne => {
+          switch (carne.nome) {
+            case 'picanha':
+              this.preco_picanha = carne.preco_kg;
+              this.consumo_adulto_picanha = carne.consumo_medio_adulto_g;
+              this.consumo_crianca_picanha = carne.consumo_medio_crianca_g;
+              break;
+            case 'costela':
+              this.preco_costela = carne.preco_kg;
+              this.consumo_adulto_costela = carne.consumo_medio_adulto_g;
+              this.consumo_crianca_costela = carne.consumo_medio_crianca_g;
+              break;
+            case 'linguiça':
+              this.preco_linguica = carne.preco_kg;
+              this.consumo_adulto_linguica = carne.consumo_medio_adulto_g;
+              this.consumo_crianca_linguica = carne.consumo_medio_crianca_g;
+              break;
+            case 'frango':
+              this.preco_frango = carne.preco_kg;
+              this.consumo_adulto_frango = carne.consumo_medio_adulto_g;
+              this.consumo_crianca_frango = carne.consumo_medio_crianca_g;
+              break;
           }
-        }
-      )
+        });
+      })
+    ).subscribe();
 
-    this.barbecueService.getPrecoPicanha()
-      .subscribe(
-        {
-          next: (preco) => {
-            this.preco_picanha = preco;
-            console.log('O kg da Picanha custa: ' + this.preco_picanha);
-          },
-
-          error: (err: any) => {
-            console.log(err);
+    this.barbecueService.getBebidas().pipe(
+      map(bebidas => {
+        bebidas.forEach(bebida => {
+          switch (bebida.nome) {
+            case 'cerveja':
+              this.preco_cerveja = bebida.preco_unidade;
+              this.consumo_adulto_cerveja = bebida.consumo_medio_adulto_ml;
+              break;
+            case 'refrigerante':
+              this.preco_refrigerante = bebida.preco_unidade;
+              this.consumo_adulto_refrigerante = bebida.consumo_medio_adulto_ml;
+              this.consumo_crianca_refrigerante = bebida.consumo_medio_crianca_ml;
+              break;
+            case 'água':
+              this.preco_agua = bebida.preco_unidade;
+              this.consumo_adulto_agua = bebida.consumo_medio_adulto_ml;
+              this.consumo_crianca_agua = bebida.consumo_medio_crianca_ml;
+              break;
+            case 'suco':
+              this.preco_suco = bebida.preco_unidade;
+              this.consumo_adulto_suco = bebida.consumo_medio_adulto_ml;
+              this.consumo_crianca_suco = bebida.consumo_medio_crianca_ml;
+              break;
           }
-        }
-      )
+        });
+      })
+    ).subscribe();
 
-    this.barbecueService.getPrecoCerveja()
-      .subscribe(
-        {
-          next: (preco) => {
-            this.preco_cerveja = preco;
-            console.log('Cada cerveja custa: ' + this.preco_cerveja);
-          },
 
-          error: (err: any) => {
-            console.log(err);
-          }
-        }
-      )
 
+    // this.barbecueService.getPrecoCarneByName('picanha')
+    //   .subscribe(
+    //     {
+    //       next: (result) => {
+    //         console.log(result);
+    //       },
+
+    //       error: (err: any) => {
+    //         console.log(err);
+    //       }
+    //     }
+    //   )
+
+    // this.barbecueService.getPrecoPicanha()
+    //   .subscribe(
+    //     {
+    //       next: (preco) => {
+    //         this.preco_picanha = preco;
+    //         console.log('O kg da Picanha custa: ' + this.preco_picanha);
+    //       },
+
+    //       error: (err: any) => {
+    //         console.log(err);
+    //       }
+    //     }
+    //   )
+
+    // this.barbecueService.getPrecoCerveja()
+    //   .subscribe(
+    //     {
+    //       next: (preco) => {
+    //         this.preco_cerveja = preco;
+    //         console.log('Cada cerveja custa: ' + this.preco_cerveja);
+    //       },
+
+    //       error: (err: any) => {
+    //         console.log(err);
+    //       }
+    //     }
+    //   )
   }
 }
