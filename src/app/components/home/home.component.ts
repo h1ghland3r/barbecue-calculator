@@ -1,3 +1,4 @@
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +10,7 @@ import { PriceCalculationComponent } from '../price-calculation/price-calculatio
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, FormsModule, PriceCalculationComponent],
+  imports: [CommonModule, MatButtonModule, MatIconModule, FormsModule, PriceCalculationComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

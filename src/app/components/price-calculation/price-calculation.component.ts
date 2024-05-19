@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BarbecueService } from '../../shared/services/barbecue.service';
 import { map, tap } from 'rxjs';
@@ -12,15 +13,32 @@ import { map, tap } from 'rxjs';
 @Component({
   selector: 'app-price-calculation',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatStepperModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatProgressSpinnerModule, MatStepperModule],
   templateUrl: './price-calculation.component.html',
-  styleUrl: './price-calculation.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './price-calculation.component.scss'
 })
 export class PriceCalculationComponent implements OnInit {
+  // forms
+
   formPeople: FormGroup;
   formFoods: FormGroup;
   formDrinks: FormGroup;
+
+  foodsList = [
+    { value: 'picanha', label: 'Picanha' },
+    { value: 'costela', label: 'Costela' },
+    { value: 'linguica', label: 'Linguiça' },
+    { value: 'frango', label: 'Frango' }
+  ];
+
+  drinksList = [
+    { value: 'cerveja', label: 'Cerveja' },
+    { value: 'refrigerante', label: 'Refrigerante' },
+    { value: 'agua', label: 'Água' },
+    { value: 'suco', label: 'Suco' }
+  ];
+
+  // valores referência
 
   preco_picanha = 0;
   preco_costela = 0;
@@ -41,6 +59,11 @@ export class PriceCalculationComponent implements OnInit {
   preco_agua = 0;
   preco_suco = 0;
 
+  // resultados
+
+  adultos_total = 0;
+  criancas_total = 0;
+
   consumo_adulto_cerveja = 0;
   consumo_adulto_refrigerante = 0;
   consumo_crianca_refrigerante = 0;
@@ -49,35 +72,38 @@ export class PriceCalculationComponent implements OnInit {
   consumo_adulto_suco = 0;
   consumo_crianca_suco = 0;
 
-  foodsList = [
-    { value: 'picanha', label: 'Picanha' },
-    { value: 'costela', label: 'Costela' },
-    { value: 'linguica', label: 'Linguiça' },
-    { value: 'frango', label: 'Frango' }
-  ];
+  valor_total_picanha = 0;
+  valor_total_costela = 0;
+  valor_total_linguica = 0;
+  valor_total_frango = 0;
 
-  drinksList = [
-    { value: 'cerveja', label: 'Cerveja' },
-    { value: 'refrigerante', label: 'Refrigerante' },
-    { value: 'agua', label: 'Água' },
-    { value: 'suco', label: 'Suco' }
-  ];
+  consumo_total_picanha = 0;
+  consumo_total_costela = 0;
+  consumo_total_linguica = 0;
+  consumo_total_frango = 0;
+
+  valor_total_cerveja = 0;
+  valor_total_refrigerante = 0;
+  valor_total_agua = 0;
+  valor_total_suco = 0;
+
+  consumo_total_cerveja = 0;
+  consumo_total_refrigerante = 0;
+  consumo_total_agua = 0;
+  consumo_total_suco = 0;
+
+  valor_total = 0;
+
+  exibirSpinner = false;
+  exibirResultados = false;
 
   formBuilder = inject(FormBuilder);
   barbecueService = inject(BarbecueService);
 
-  // template driven
-  nome: string = '';
-
-  onSubmit() {
-    console.log('Nome submetido:', this.nome);
-  }
-
   constructor() {
-    // reactive
     this.formPeople = this.formBuilder.group({
-      adults: new FormControl(0, [Validators.required, Validators.min(0)]),
-      children: new FormControl(0),
+      adultos: new FormControl(0, [Validators.required, Validators.min(0)]),
+      criancas: new FormControl(0),
     });
 
     this.formFoods = this.formBuilder.group({
@@ -100,17 +126,83 @@ export class PriceCalculationComponent implements OnInit {
   }
 
   submit() {
-    const formPeopleValues = this.formPeople.value;
-    const formFoodsValues = this.formFoods.value;
-    const formDrinksValues = this.formDrinks.value;
+    if (this.formPeople.valid && this.formFoods.valid && this.formDrinks.valid) {
+      this.exibirSpinner = true;
+      this.exibirResultados = false;
 
-    console.log('Formulário de pessoas:', formPeopleValues);
-    console.log('Formulário de alimentos:', formFoodsValues);
-    console.log('Formulário de bebidas:', formDrinksValues);
+      const peopleValues = this.formPeople.value;
+      const foodsValues = this.formFoods.value;
+      const drinksValues = this.formDrinks.value;
 
-    this.formPeople.reset();
-    this.formFoods.reset();
-    this.formDrinks.reset();
+      const adultos = peopleValues.adultos;
+      const criancas = peopleValues.criancas;
+      const picanha = foodsValues.picanha;
+      const costela = foodsValues.costela;
+      const linguica = foodsValues.linguica;
+      const frango = foodsValues.frango;
+      const cerveja = drinksValues.cerveja;
+      const refrigerante = drinksValues.refrigerante;
+      const agua = drinksValues.agua;
+      const suco = drinksValues.suco;
+
+      if (adultos) {
+        this.adultos_total = adultos;
+      }
+
+      if (criancas) {
+        this.criancas_total = criancas;
+      }
+
+      // foods
+      if (picanha) {
+        this.consumo_total_picanha = (adultos * this.consumo_adulto_picanha) + (criancas * this.consumo_crianca_picanha);
+        this.valor_total_picanha = (this.consumo_total_picanha / 1000) * this.preco_picanha;
+      }
+
+      if (costela) {
+        this.consumo_total_costela = (adultos * this.consumo_adulto_costela) + (criancas * this.consumo_crianca_costela);
+        this.valor_total_costela = (this.consumo_total_costela / 1000) * this.preco_costela;
+      }
+
+      if (linguica) {
+        this.consumo_total_linguica = (adultos * this.consumo_adulto_linguica) + (criancas * this.consumo_crianca_linguica);
+        this.valor_total_linguica = (this.consumo_total_linguica / 1000) * this.preco_linguica;
+      }
+
+      if (frango) {
+        this.consumo_total_frango = (adultos * this.consumo_adulto_frango) + (criancas * this.consumo_crianca_frango);
+        this.valor_total_frango = (this.consumo_total_frango / 1000) * this.preco_frango;
+      }
+
+      // drinks
+      if (cerveja) {
+        this.consumo_total_cerveja = adultos * 500;
+        this.valor_total_cerveja = (this.consumo_total_cerveja / 1000) * this.preco_cerveja;
+      }
+
+      if (refrigerante) {
+        this.consumo_total_refrigerante = (adultos * 300) + (criancas * 200);
+        this.valor_total_refrigerante = (this.consumo_total_refrigerante / 1000) * this.preco_refrigerante;
+      }
+
+      if (agua) {
+        this.consumo_total_agua = (adultos * 500) + (criancas * 300);
+        this.valor_total_agua = (this.consumo_total_agua / 1000) * this.preco_agua;
+      }
+
+      if (suco) {
+        this.consumo_total_suco = (adultos * 500) + (criancas * 300);
+        this.valor_total_suco = (this.consumo_total_suco / 1000) * this.preco_suco;
+      }
+
+      this.valor_total = this.valor_total_picanha + this.valor_total_costela + this.valor_total_linguica + this.valor_total_frango +
+        this.valor_total_cerveja + this.valor_total_refrigerante + this.valor_total_agua + this.valor_total_suco;
+
+      setTimeout(() => {
+        this.exibirSpinner = false;
+        this.exibirResultados = true;
+      }, 1000);
+    }
   }
 
   private initializeValues(): void {
