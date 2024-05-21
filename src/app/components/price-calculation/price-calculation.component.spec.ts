@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PriceCalculationComponent } from './price-calculation.component';
+import { provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 describe('PriceCalculationComponent', () => {
   let component: PriceCalculationComponent;
@@ -8,10 +10,11 @@ describe('PriceCalculationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PriceCalculationComponent]
+      imports: [PriceCalculationComponent],
+      providers: [provideHttpClient(), provideAnimations()]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(PriceCalculationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

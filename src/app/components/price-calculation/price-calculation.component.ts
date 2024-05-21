@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BarbecueService } from '../../shared/services/barbecue.service';
-import { map, tap } from 'rxjs';
+import { Subscription, map } from 'rxjs';
 
 @Component({
   selector: 'app-price-calculation',
@@ -17,7 +17,7 @@ import { map, tap } from 'rxjs';
   templateUrl: './price-calculation.component.html',
   styleUrl: './price-calculation.component.scss'
 })
-export class PriceCalculationComponent implements OnInit {
+export class PriceCalculationComponent implements OnInit, OnDestroy {
   // forms
 
   formPeople: FormGroup;
@@ -97,6 +97,9 @@ export class PriceCalculationComponent implements OnInit {
   exibirSpinner = false;
   exibirResultados = false;
 
+  subscriptionCarnes = new Subscription();
+  subscriptionBebidas = new Subscription();
+
   formBuilder = inject(FormBuilder);
   barbecueService = inject(BarbecueService);
 
@@ -123,6 +126,16 @@ export class PriceCalculationComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeValues();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscriptionCarnes) {
+      this.subscriptionCarnes.unsubscribe();
+    }
+
+    if (this.subscriptionBebidas) {
+      this.subscriptionBebidas.unsubscribe();
+    }
   }
 
   submit() {
@@ -206,7 +219,7 @@ export class PriceCalculationComponent implements OnInit {
   }
 
   private initializeValues(): void {
-    this.barbecueService.getCarnes().pipe(
+    this.subscriptionCarnes = this.barbecueService.getCarnes().pipe(
       map(carnes => {
         carnes.forEach(carne => {
           switch (carne.nome) {
@@ -235,7 +248,7 @@ export class PriceCalculationComponent implements OnInit {
       })
     ).subscribe();
 
-    this.barbecueService.getBebidas().pipe(
+    this.subscriptionBebidas = this.barbecueService.getBebidas().pipe(
       map(bebidas => {
         bebidas.forEach(bebida => {
           switch (bebida.nome) {
@@ -262,7 +275,6 @@ export class PriceCalculationComponent implements OnInit {
         });
       })
     ).subscribe();
-
 
 
     // this.barbecueService.getPrecoCarneByName('picanha')
