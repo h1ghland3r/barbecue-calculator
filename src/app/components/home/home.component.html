@@ -6,7 +6,8 @@
   </div>
 
   <div class="text-center">
-    <button mat-raised-button color="primary" class="button-start" (click)="scrollToSection('form-container')">Let's
+    <button mat-raised-button color="primary" class="btn-start-scroll-to-form"
+      (click)="scrollToSection('form-container')">Let's
       start?</button>
   </div>
 
@@ -22,7 +23,7 @@
 
 <section class="content bg-primary p-10">
   <div class="flex justify-end">
-    <button mat-flat-button color="primary" (click)="scrollToSection('header')">
+    <button mat-flat-button color="primary" class="btn-scroll-to-header" (click)="scrollToSection('header')">
       <mat-icon>arrow_upward</mat-icon>
       Scroll to the top
     </button>
